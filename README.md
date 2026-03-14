@@ -1,8 +1,32 @@
 # Airflow Logs Investigation Guide - AWS
 
-A practical guide and toolkit for investigating Apache Airflow task logs in AWS environments, with a focus on Amazon MWAA (Managed Workflows for Apache Airflow).
+A practical guide and toolkit for investigating Apache Airflow task logs in AWS environments, featuring **AI-powered diagnostic agents** built with LangChain.
 
-> **Note:** This project includes mock data for demonstration purposes. All AWS account IDs, bucket names, URLs, and log contents are **completely fictional**. However, the investigation methodology and scripts can be adapted for use with real AWS environments.
+> **Note:** This project includes mock data for demonstration purposes. All AWS account IDs, bucket names, URLs, and log contents are **completely fictional**. However, the investigation methodology, scripts, and AI agents can be adapted for use with real AWS environments.
+
+## AI Agents for Automated Diagnosis
+
+This project includes **LLM-powered agents** that automatically diagnose Airflow failures:
+
+```python
+from ai_agents import MultiToolAgent, get_llm
+
+# Use local models (Ollama) or cloud APIs (OpenAI/Anthropic)
+llm = get_llm("ollama", "llama3")
+agent = MultiToolAgent(llm)
+
+# Autonomous investigation
+result = agent.investigate("Why did etl_sales_daily fail this morning?")
+print(result["output"])
+```
+
+**Features:**
+- **Diagnostic Agent** - Analyzes logs and generates expert diagnoses
+- **Multi-Tool Agent** - Autonomously searches, retrieves, and analyzes logs
+- **10 Specialized Tools** - CloudWatch, S3, API queries, error analysis
+- **Multiple LLM Support** - Ollama (local/free), OpenAI, Anthropic
+
+See [AI Agents Documentation](ai_agents/README.md) for full details.
 
 ## Why This Project
 
@@ -19,16 +43,34 @@ This project provides:
 3. **Runnable demo scripts** showing how to retrieve and analyze logs
 4. A **completed investigation report** as a reference example
 
-## Quick Demo
+## Quick Start
 
-Run the demo to see the investigation workflow in action:
+### Basic Demo (No LLM Required)
 
 ```bash
-cd scripts
-python3 mock_demo.py
+python3 scripts/mock_demo.py
 ```
 
-This will simulate investigating a failed `extract_data` task that succeeded on retry.
+This simulates investigating a failed `extract_data` task using mock data.
+
+### AI Agents Demo (Requires LLM)
+
+```bash
+# Install dependencies
+pip install -r ai_agents/requirements.txt
+
+# Option 1: Using Ollama (local, free)
+ollama pull llama3
+python -m ai_agents.demo
+
+# Option 2: Using OpenAI
+export OPENAI_API_KEY="sk-..."
+python -m ai_agents.demo --provider openai --model gpt-4
+
+# Option 3: Using Anthropic
+export ANTHROPIC_API_KEY="sk-ant-..."
+python -m ai_agents.demo --provider anthropic
+```
 
 ## Project Structure
 
@@ -36,6 +78,18 @@ This will simulate investigating a failed `extract_data` task that succeeded on 
 .
 ├── README.md                              # This file
 ├── README_esp.md                          # Spanish version
+├── ai_agents/                             # LLM-powered investigation agents
+│   ├── agents/
+│   │   ├── diagnostic_agent.py            # Log analysis with LLM
+│   │   └── multi_tool_agent.py            # Autonomous multi-tool agent
+│   ├── tools/
+│   │   ├── log_tools.py                   # CloudWatch/S3 retrieval tools
+│   │   ├── api_tools.py                   # Airflow API query tools
+│   │   └── analysis_tools.py              # Error extraction & analysis
+│   ├── prompts/                           # Expert system prompts
+│   ├── config.py                          # LLM provider configuration
+│   ├── demo.py                            # Interactive AI demo
+│   └── requirements.txt                   # AI dependencies (LangChain)
 ├── docs/
 │   └── investigate_airflow_logs.md        # Complete step-by-step guide
 ├── templates/
@@ -140,17 +194,29 @@ response = client.get_log_events(
 
 ## Skills Demonstrated
 
-This project showcases:
+### AI Engineering
+- **LLM Integration** - Multi-provider support (Ollama, OpenAI, Anthropic)
+- **LangChain Agents** - Tool-calling agents with autonomous reasoning
+- **Prompt Engineering** - Expert system prompts for diagnostic tasks
+- **Agentic Architecture** - Multi-step investigation workflows
 
-- **Airflow operations** - Understanding task execution and logging
-- **AWS logging architecture** - CloudWatch, S3, IAM permissions
-- **MWAA troubleshooting** - Environment configuration and log retrieval
-- **Production debugging** - Systematic investigation workflow
-- **Technical documentation** - Structured guides and templates
-- **Python automation** - Scripts for operational support
+### Data & Cloud Engineering
+- **Airflow Operations** - Understanding task execution and logging
+- **AWS Architecture** - CloudWatch, S3, MWAA, IAM permissions
+- **Production Debugging** - Systematic investigation workflows
+- **Python Automation** - Scripts for operational support
+
+### Software Engineering
+- **Clean Architecture** - Modular, extensible design
+- **Technical Documentation** - Structured guides and templates
+- **Developer Experience** - Interactive demos, clear APIs
 
 ## Documentation
 
+### AI Agents
+- [AI Agents Overview](ai_agents/README.md) - Setup, usage, and architecture
+
+### Investigation Guides
 - [Complete Investigation Guide](docs/investigate_airflow_logs.md) - Full step-by-step instructions
 - [Investigation Checklist](checklists/airflow_logs_checklist.md) - Quick reference during investigations
 - [Report Template](templates/investigation_report.md) - Document your findings

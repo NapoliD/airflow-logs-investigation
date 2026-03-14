@@ -1,0 +1,27 @@
+[2024-01-15T10:00:00.000+0000] {taskinstance.py:1327} INFO - Dependencies all met for dep_context=non-hierarchical
+[2024-01-15T10:00:00.000+0000] {taskinstance.py:1327} INFO - Starting attempt 1 of 2
+[2024-01-15T10:00:00.500+0000] {taskinstance.py:1346} INFO - Executing <Task(PythonOperator): extract_data> on 2024-01-15 10:00:00+00:00
+[2024-01-15T10:00:01.000+0000] {extract_data.py:45} INFO - Connecting to source database: salesdb.acme-corp.internal:5432
+[2024-01-15T10:00:02.000+0000] {extract_data.py:52} INFO - Executing query: SELECT * FROM sales WHERE date = '2024-01-14'
+[2024-01-15T10:00:32.000+0000] {extract_data.py:58} ERROR - Database connection timeout after 30s
+[2024-01-15T10:00:33.000+0000] {taskinstance.py:1824} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/usr/local/airflow/dags/etl_sales_daily.py", line 58, in extract_data
+    result = connection.execute(query, timeout=30)
+  File "/usr/local/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1412, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+  File "/usr/local/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1208, in _execute_clauseelement
+    compiled_sql, distilled_params, cache_hit=cache_hit
+  File "/usr/local/lib/python3.10/site-packages/sqlalchemy/engine/base.py", line 1414, in _execute_context
+    self.dialect.do_execute(cursor, statement, parameters, context)
+  File "/usr/local/lib/python3.10/site-packages/psycopg2/__init__.py", line 122, in execute
+    self._execute_helper(operation, parameters, async_=False)
+psycopg2.OperationalError: connection timed out
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+[2024-01-15T10:00:40.000+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=etl_sales_daily, task_id=extract_data, run_id=scheduled__2024-01-15T10:00:00+00:00, execution_date=20240115T100000, start_date=20240115T100000, end_date=20240115T100040
+[2024-01-15T10:00:45.000+0000] {local_task_job_runner.py:225} INFO - Task exited with return code 1
+[2024-01-15T10:00:45.500+0000] {scheduler_job_runner.py:1821} INFO - Queuing task for retry: dag_id=etl_sales_daily, task_id=extract_data, attempt=1/2
+[2024-01-15T10:00:46.000+0000] {local_task_job_runner.py:228} INFO - Retrying in 300 seconds (retry_delay=5m)

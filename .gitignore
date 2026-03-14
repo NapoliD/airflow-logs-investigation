@@ -1,0 +1,64 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Notes and drafts
+*.draft
+tarea.txt
+
+# Claude Code
+.claude/
+.claude.json
+.claude.json.backup*
+claude.md
+CLAUDE.md
+
+# Sensitive data / Credentials
+.env
+.env.*
+*.env
+.envrc
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+credentials.json
+secrets.json
+*credentials*
+*secret*
+*.credentials
+.aws/
+.ssh/
+config.local.*
+*.local.json
+*.local.yaml
+*.local.yml
+
+# AWS
+.aws-sam/
+samconfig.toml
+
+# API keys
+api_keys.txt
+apikeys.json
+
+# Logs with potential sensitive data
+*.log
+!mock_data/**/*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3

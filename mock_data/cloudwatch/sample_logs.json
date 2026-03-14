@@ -1,0 +1,152 @@
+{
+  "logGroupName": "airflow-prod-data-pipeline-Task",
+  "logStreams": [
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "firstEventTimestamp": 1705315200000,
+      "lastEventTimestamp": 1705315245000
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "firstEventTimestamp": 1705315500000,
+      "lastEventTimestamp": 1705315560000
+    },
+    {
+      "logStreamName": "etl_sales_daily/load_to_warehouse/2024-01-15T10:00:00+00:00/1",
+      "firstEventTimestamp": 1705315600000,
+      "lastEventTimestamp": 1705315680000
+    }
+  ],
+  "events": [
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315200000,
+      "message": "[2024-01-15T10:00:00.000+0000] {taskinstance.py:1327} INFO - Starting attempt 1 of 2"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315201000,
+      "message": "[2024-01-15T10:00:01.000+0000] {extract_data.py:45} INFO - Connecting to source database: salesdb.acme-corp.internal:5432"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315202000,
+      "message": "[2024-01-15T10:00:02.000+0000] {extract_data.py:52} INFO - Executing query: SELECT * FROM sales WHERE date = '2024-01-14'"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315232000,
+      "message": "[2024-01-15T10:00:32.000+0000] {extract_data.py:58} ERROR - Database connection timeout after 30s"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315233000,
+      "message": "[2024-01-15T10:00:33.000+0000] {taskinstance.py:1824} ERROR - Task failed with exception"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315234000,
+      "message": "Traceback (most recent call last):"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315235000,
+      "message": "  File \"/usr/local/airflow/dags/etl_sales_daily.py\", line 58, in extract_data"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315236000,
+      "message": "    result = connection.execute(query, timeout=30)"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315237000,
+      "message": "  File \"/usr/local/lib/python3.10/site-packages/sqlalchemy/engine/base.py\", line 1412, in execute"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315238000,
+      "message": "    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315239000,
+      "message": "sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection timed out"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315240000,
+      "message": "[2024-01-15T10:00:40.000+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=etl_sales_daily, task_id=extract_data, run_id=scheduled__2024-01-15T10:00:00+00:00, execution_date=20240115T100000, start_date=20240115T100000, end_date=20240115T100040"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315245000,
+      "message": "[2024-01-15T10:00:45.000+0000] {local_task_job_runner.py:225} INFO - Task exited with return code 1. Retrying in 300 seconds."
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315500000,
+      "message": "[2024-01-15T10:05:00.000+0000] {taskinstance.py:1327} INFO - Starting attempt 2 of 2"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315501000,
+      "message": "[2024-01-15T10:05:01.000+0000] {extract_data.py:45} INFO - Connecting to source database: salesdb.acme-corp.internal:5432"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315503000,
+      "message": "[2024-01-15T10:05:03.000+0000] {extract_data.py:48} INFO - Connection established successfully"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315504000,
+      "message": "[2024-01-15T10:05:04.000+0000] {extract_data.py:52} INFO - Executing query: SELECT * FROM sales WHERE date = '2024-01-14'"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315545000,
+      "message": "[2024-01-15T10:05:45.000+0000] {extract_data.py:62} INFO - Query completed. Retrieved 15,234 rows."
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315550000,
+      "message": "[2024-01-15T10:05:50.000+0000] {extract_data.py:68} INFO - Data written to s3://acme-corp-airflow-prod/staging/sales_2024-01-14.parquet"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315555000,
+      "message": "[2024-01-15T10:05:55.000+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=etl_sales_daily, task_id=extract_data, run_id=scheduled__2024-01-15T10:00:00+00:00"
+    },
+    {
+      "logStreamName": "etl_sales_daily/extract_data/2024-01-15T10:00:00+00:00/2",
+      "timestamp": 1705315560000,
+      "message": "[2024-01-15T10:06:00.000+0000] {local_task_job_runner.py:225} INFO - Task completed successfully after retry."
+    },
+    {
+      "logStreamName": "etl_sales_daily/load_to_warehouse/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315600000,
+      "message": "[2024-01-15T10:06:40.000+0000] {taskinstance.py:1327} INFO - Starting attempt 1 of 2"
+    },
+    {
+      "logStreamName": "etl_sales_daily/load_to_warehouse/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315610000,
+      "message": "[2024-01-15T10:06:50.000+0000] {load_to_warehouse.py:32} INFO - Reading staged data from s3://acme-corp-airflow-prod/staging/sales_2024-01-14.parquet"
+    },
+    {
+      "logStreamName": "etl_sales_daily/load_to_warehouse/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315640000,
+      "message": "[2024-01-15T10:07:20.000+0000] {load_to_warehouse.py:48} INFO - Loaded 15,234 rows into redshift.sales_daily"
+    },
+    {
+      "logStreamName": "etl_sales_daily/load_to_warehouse/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315670000,
+      "message": "[2024-01-15T10:07:50.000+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=etl_sales_daily, task_id=load_to_warehouse, run_id=scheduled__2024-01-15T10:00:00+00:00"
+    },
+    {
+      "logStreamName": "etl_sales_daily/load_to_warehouse/2024-01-15T10:00:00+00:00/1",
+      "timestamp": 1705315680000,
+      "message": "[2024-01-15T10:08:00.000+0000] {local_task_job_runner.py:225} INFO - Task completed successfully."
+    }
+  ]
+}

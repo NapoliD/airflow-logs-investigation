@@ -1,0 +1,74 @@
+{
+  "Environment": {
+    "Name": "prod-data-pipeline",
+    "Status": "AVAILABLE",
+    "Arn": "arn:aws:airflow:us-east-1:123456789012:environment/prod-data-pipeline",
+    "CreatedAt": "2023-06-15T14:30:00+00:00",
+    "WebserverUrl": "https://a1b2c3d4-e5f6-7890-abcd-ef1234567890.c1.us-east-1.airflow.amazonaws.com",
+    "ExecutionRoleArn": "arn:aws:iam::123456789012:role/mwaa-prod-data-pipeline-execution-role",
+    "ServiceRoleArn": "arn:aws:iam::123456789012:role/aws-service-role/airflow.amazonaws.com/AWSServiceRoleForAmazonMWAA",
+    "KmsKey": "arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012",
+    "AirflowVersion": "2.8.1",
+    "SourceBucketArn": "arn:aws:s3:::acme-corp-airflow-prod",
+    "DagS3Path": "dags/",
+    "PluginsS3Path": "plugins/plugins.zip",
+    "RequirementsS3Path": "requirements/requirements.txt",
+    "AirflowConfigurationOptions": {
+      "core.default_timezone": "UTC",
+      "logging.remote_logging": "True",
+      "logging.remote_base_log_folder": "s3://acme-corp-airflow-prod/logs",
+      "webserver.default_ui_timezone": "America/New_York"
+    },
+    "EnvironmentClass": "mw1.medium",
+    "MaxWorkers": 10,
+    "MinWorkers": 1,
+    "Schedulers": 2,
+    "NetworkConfiguration": {
+      "SubnetIds": [
+        "subnet-0123456789abcdef0",
+        "subnet-0123456789abcdef1"
+      ],
+      "SecurityGroupIds": [
+        "sg-0123456789abcdef0"
+      ]
+    },
+    "LoggingConfiguration": {
+      "DagProcessingLogs": {
+        "Enabled": true,
+        "LogLevel": "INFO",
+        "CloudWatchLogGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:airflow-prod-data-pipeline-DAGProcessing"
+      },
+      "SchedulerLogs": {
+        "Enabled": true,
+        "LogLevel": "INFO",
+        "CloudWatchLogGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:airflow-prod-data-pipeline-Scheduler"
+      },
+      "TaskLogs": {
+        "Enabled": true,
+        "LogLevel": "INFO",
+        "CloudWatchLogGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:airflow-prod-data-pipeline-Task"
+      },
+      "WebserverLogs": {
+        "Enabled": true,
+        "LogLevel": "WARNING",
+        "CloudWatchLogGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:airflow-prod-data-pipeline-WebServer"
+      },
+      "WorkerLogs": {
+        "Enabled": true,
+        "LogLevel": "INFO",
+        "CloudWatchLogGroupArn": "arn:aws:logs:us-east-1:123456789012:log-group:airflow-prod-data-pipeline-Worker"
+      }
+    },
+    "LastUpdate": {
+      "Status": "SUCCESS",
+      "CreatedAt": "2024-01-10T09:15:00+00:00"
+    },
+    "WeeklyMaintenanceWindowStart": "SUN:03:00",
+    "Tags": {
+      "Environment": "production",
+      "Team": "data-engineering",
+      "CostCenter": "DE-001",
+      "Project": "sales-analytics"
+    }
+  }
+}

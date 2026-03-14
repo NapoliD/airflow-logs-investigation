@@ -1,0 +1,76 @@
+{
+  "dag_id": "etl_sales_daily",
+  "dag_run_id": "scheduled__2024-01-15T10:00:00+00:00",
+  "task_id": "extract_data",
+  "task_instances": [
+    {
+      "task_id": "extract_data",
+      "dag_id": "etl_sales_daily",
+      "run_id": "scheduled__2024-01-15T10:00:00+00:00",
+      "map_index": -1,
+      "execution_date": "2024-01-15T10:00:00+00:00",
+      "start_date": "2024-01-15T10:00:00.000000+00:00",
+      "end_date": "2024-01-15T10:05:55.000000+00:00",
+      "duration": 355.0,
+      "state": "success",
+      "try_number": 2,
+      "max_tries": 2,
+      "hostname": "ip-10-0-1-45.ec2.internal",
+      "unixname": "airflow",
+      "pool": "default_pool",
+      "pool_slots": 1,
+      "queue": "default",
+      "priority_weight": 1,
+      "operator": "PythonOperator",
+      "queued_dttm": "2024-01-15T10:00:00.000000+00:00",
+      "pid": 12847,
+      "executor_config": "{}"
+    },
+    {
+      "task_id": "load_to_warehouse",
+      "dag_id": "etl_sales_daily",
+      "run_id": "scheduled__2024-01-15T10:00:00+00:00",
+      "map_index": -1,
+      "execution_date": "2024-01-15T10:00:00+00:00",
+      "start_date": "2024-01-15T10:06:40.000000+00:00",
+      "end_date": "2024-01-15T10:07:50.000000+00:00",
+      "duration": 70.0,
+      "state": "success",
+      "try_number": 1,
+      "max_tries": 2,
+      "hostname": "ip-10-0-1-45.ec2.internal",
+      "unixname": "airflow",
+      "pool": "default_pool",
+      "pool_slots": 1,
+      "queue": "default",
+      "priority_weight": 1,
+      "operator": "PythonOperator",
+      "queued_dttm": "2024-01-15T10:06:00.000000+00:00",
+      "pid": 12901,
+      "executor_config": "{}"
+    }
+  ],
+  "dag_runs": [
+    {
+      "dag_run_id": "scheduled__2024-01-15T10:00:00+00:00",
+      "dag_id": "etl_sales_daily",
+      "logical_date": "2024-01-15T10:00:00+00:00",
+      "execution_date": "2024-01-15T10:00:00+00:00",
+      "start_date": "2024-01-15T10:00:00.000000+00:00",
+      "end_date": "2024-01-15T10:08:00.000000+00:00",
+      "state": "success",
+      "run_type": "scheduled",
+      "external_trigger": false,
+      "conf": {}
+    }
+  ],
+  "logs": {
+    "extract_data": {
+      "try_number_1": "[2024-01-15T10:00:00.000+0000] {taskinstance.py:1327} INFO - Starting attempt 1 of 2\n[2024-01-15T10:00:01.000+0000] {extract_data.py:45} INFO - Connecting to source database: salesdb.acme-corp.internal:5432\n[2024-01-15T10:00:02.000+0000] {extract_data.py:52} INFO - Executing query: SELECT * FROM sales WHERE date = '2024-01-14'\n[2024-01-15T10:00:32.000+0000] {extract_data.py:58} ERROR - Database connection timeout after 30s\n[2024-01-15T10:00:33.000+0000] {taskinstance.py:1824} ERROR - Task failed with exception\nTraceback (most recent call last):\n  File \"/usr/local/airflow/dags/etl_sales_daily.py\", line 58, in extract_data\n    result = connection.execute(query, timeout=30)\npsycopg2.OperationalError: connection timed out\n[2024-01-15T10:00:40.000+0000] {taskinstance.py:1400} INFO - Marking task as FAILED.",
+      "try_number_2": "[2024-01-15T10:05:00.000+0000] {taskinstance.py:1327} INFO - Starting attempt 2 of 2\n[2024-01-15T10:05:01.000+0000] {extract_data.py:45} INFO - Connecting to source database: salesdb.acme-corp.internal:5432\n[2024-01-15T10:05:03.000+0000] {extract_data.py:48} INFO - Connection established successfully\n[2024-01-15T10:05:04.000+0000] {extract_data.py:52} INFO - Executing query: SELECT * FROM sales WHERE date = '2024-01-14'\n[2024-01-15T10:05:45.000+0000] {extract_data.py:62} INFO - Query completed. Retrieved 15,234 rows.\n[2024-01-15T10:05:50.000+0000] {extract_data.py:68} INFO - Data written to s3://acme-corp-airflow-prod/staging/sales_2024-01-14.parquet\n[2024-01-15T10:05:55.000+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS."
+    },
+    "load_to_warehouse": {
+      "try_number_1": "[2024-01-15T10:06:40.000+0000] {taskinstance.py:1327} INFO - Starting attempt 1 of 2\n[2024-01-15T10:06:50.000+0000] {load_to_warehouse.py:32} INFO - Reading staged data from s3://acme-corp-airflow-prod/staging/sales_2024-01-14.parquet\n[2024-01-15T10:07:20.000+0000] {load_to_warehouse.py:48} INFO - Loaded 15,234 rows into redshift.sales_daily\n[2024-01-15T10:07:50.000+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS."
+    }
+  }
+}

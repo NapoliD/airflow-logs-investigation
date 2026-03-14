@@ -1,0 +1,12 @@
+[2024-01-15T10:05:00.000+0000] {taskinstance.py:1327} INFO - Dependencies all met for dep_context=non-hierarchical
+[2024-01-15T10:05:00.000+0000] {taskinstance.py:1327} INFO - Starting attempt 2 of 2
+[2024-01-15T10:05:00.500+0000] {taskinstance.py:1346} INFO - Executing <Task(PythonOperator): extract_data> on 2024-01-15 10:00:00+00:00
+[2024-01-15T10:05:01.000+0000] {extract_data.py:45} INFO - Connecting to source database: salesdb.acme-corp.internal:5432
+[2024-01-15T10:05:03.000+0000] {extract_data.py:48} INFO - Connection established successfully
+[2024-01-15T10:05:04.000+0000] {extract_data.py:52} INFO - Executing query: SELECT * FROM sales WHERE date = '2024-01-14'
+[2024-01-15T10:05:45.000+0000] {extract_data.py:62} INFO - Query completed. Retrieved 15,234 rows.
+[2024-01-15T10:05:48.000+0000] {extract_data.py:65} INFO - Converting data to Parquet format...
+[2024-01-15T10:05:50.000+0000] {extract_data.py:68} INFO - Data written to s3://acme-corp-airflow-prod/staging/sales_2024-01-14.parquet
+[2024-01-15T10:05:52.000+0000] {extract_data.py:72} INFO - Upload completed. File size: 4.2 MB
+[2024-01-15T10:05:55.000+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=etl_sales_daily, task_id=extract_data, run_id=scheduled__2024-01-15T10:00:00+00:00, execution_date=20240115T100000, start_date=20240115T100500, end_date=20240115T100555
+[2024-01-15T10:06:00.000+0000] {local_task_job_runner.py:225} INFO - Task completed successfully after retry.

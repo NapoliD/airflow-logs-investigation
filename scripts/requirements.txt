@@ -1,0 +1,15 @@
+# Airflow Logs Investigation - Dependencies
+#
+# For the mock demo (mock_demo.py):
+#   No external dependencies required - uses only Python standard library
+#
+# For real AWS integration (fetch_*.py scripts):
+boto3>=1.34.0
+botocore>=1.34.0
+requests>=2.31.0
+
+# Optional: for better output formatting
+rich>=13.0.0
+
+# Optional: for data analysis
+pandas>=2.0.0

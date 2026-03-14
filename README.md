@@ -242,6 +242,8 @@ Built by someone who got tired of debugging Airflow at 3 AM.
 
 If you're dealing with similar challenges in your data pipelines, feel free to reach out — I'm always happy to discuss Airflow, AWS, and AI-powered operations.
 
+🌐 **[napolidata.com](https://napolidata.com)**
+
 ---
 
 ## 📄 License

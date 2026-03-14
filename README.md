@@ -4,9 +4,23 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![LangChain](https://img.shields.io/badge/LangChain-0.3+-green.svg)](https://langchain.com/)
+[![Docker](https://img.shields.io/badge/Docker-ready-blue.svg)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A practical toolkit for investigating Apache Airflow task logs in AWS environments, featuring **AI-powered diagnostic agents** that can autonomously find, analyze, and explain failures.
+
+<!--
+To add the demo GIF:
+1. Run: python scripts/visual_demo.py
+2. Record with asciinema, terminalizer, or screen capture
+3. Save as assets/demo.gif
+4. Uncomment the image tag below
+
+<p align="center">
+  <img src="assets/demo.gif" alt="AI Agent investigating an Airflow failure" width="700">
+</p>
+<p align="center"><i>AI agent autonomously investigating a failed ETL task</i></p>
+-->
 
 ---
 
@@ -70,28 +84,38 @@ Confidence: High
 
 ## ⚡ Quick Start
 
-### Option 1: Basic Demo (No AI)
+### 🐳 Docker (Easiest)
 
 ```bash
 git clone https://github.com/NapoliD/airflow-logs-investigation.git
 cd airflow-logs-investigation
-python3 scripts/mock_demo.py
+
+# Basic demo (no LLM required)
+docker-compose up demo
+
+# AI agents with Ollama (downloads model automatically)
+docker-compose up ai-ollama
+
+# AI agents with OpenAI
+OPENAI_API_KEY=sk-... docker-compose up ai-openai
 ```
 
-### Option 2: AI Agents with Ollama (Free, Local)
+### 💻 Local Installation
 
 ```bash
-# Install Ollama from https://ollama.ai
-ollama pull llama3
+git clone https://github.com/NapoliD/airflow-logs-investigation.git
+cd airflow-logs-investigation
 
+# Option 1: Basic demo (no AI)
+python3 scripts/mock_demo.py
+
+# Option 2: AI Agents with Ollama (free, local)
+ollama pull llama3
 pip install -r ai_agents/requirements.txt
 python -m ai_agents.demo
-```
 
-### Option 3: AI Agents with OpenAI/Anthropic
-
-```bash
-export OPENAI_API_KEY="sk-..."  # or ANTHROPIC_API_KEY
+# Option 3: AI Agents with OpenAI
+export OPENAI_API_KEY="sk-..."
 pip install -r ai_agents/requirements.txt
 python -m ai_agents.demo --provider openai --model gpt-4
 ```

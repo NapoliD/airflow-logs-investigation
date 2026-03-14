@@ -1,0 +1,67 @@
+# Airflow Logs Investigation Toolkit
+#
+# Quick start:
+#   docker-compose up demo          # Basic demo (no LLM)
+#   docker-compose up ai-ollama     # AI demo with Ollama
+#   docker-compose up ai-openai     # AI demo with OpenAI
+#
+# For interactive mode:
+#   docker-compose run --rm ai-ollama --mode interactive
+
+version: '3.8'
+
+services:
+  # Basic demo - no LLM required
+  demo:
+    build: .
+    command: python scripts/mock_demo.py
+    volumes:
+      - ./mock_data:/app/mock_data:ro
+
+  # AI Agents with Ollama (local LLM)
+  ai-ollama:
+    build: .
+    command: python -m ai_agents.demo --provider ollama --model llama3
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    volumes:
+      - ./mock_data:/app/mock_data:ro
+    stdin_open: true
+    tty: true
+
+  # Ollama server (local LLM)
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # Pull llama3 on first run
+    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull llama3 && wait"]
+
+  # AI Agents with OpenAI
+  ai-openai:
+    build: .
+    command: python -m ai_agents.demo --provider openai --model gpt-4
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./mock_data:/app/mock_data:ro
+    stdin_open: true
+    tty: true
+
+  # AI Agents with Anthropic
+  ai-anthropic:
+    build: .
+    command: python -m ai_agents.demo --provider anthropic --model claude-3-sonnet-20240229
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - ./mock_data:/app/mock_data:ro
+    stdin_open: true
+    tty: true
+
+volumes:
+  ollama_data:

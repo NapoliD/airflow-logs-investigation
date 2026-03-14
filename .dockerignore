@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+.eggs
+*.egg-info
+.pytest_cache
+.mypy_cache
+
+# Virtual environments
+venv
+.venv
+env
+.env
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
+*.tmp
+*.bak
+tarea.txt
+PLAN.md
+PLAN_chatgpt.md
+
+# Claude
+.claude
+.claude.json
+CLAUDE.md

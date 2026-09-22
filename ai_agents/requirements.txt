@@ -7,7 +7,7 @@ langchain-core>=0.3,<0.4
 
 # LLM Providers
 langchain-ollama>=0.2,<0.4      # For local models via Ollama
-langchain-openai>=0.2,<0.4      # For OpenAI API
+langchain-openai>=1.6.2,<1.7      # For OpenAI API
 langchain-anthropic>=0.2,<0.4   # For Anthropic/Claude API
 
 # Utilities

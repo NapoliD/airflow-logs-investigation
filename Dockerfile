@@ -1,7 +1,7 @@
 # Airflow Logs Investigation Toolkit
 # Supports both basic demo and AI agents
 
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 LABEL maintainer="napolidata.com"
 LABEL description="AI-powered Airflow log investigation toolkit"

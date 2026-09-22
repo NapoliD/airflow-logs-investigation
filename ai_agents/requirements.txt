@@ -2,7 +2,7 @@
 # Install with: pip install -r ai_agents/requirements.txt
 
 # Core LangChain
-langchain>=0.3,<0.4
+langchain>=1.4.2,<1.5
 langchain-core>=0.3,<0.4
 
 # LLM Providers

@@ -10,7 +10,14 @@ Usage:
     python fetch_api_logs.py --mwaa-env prod-data-pipeline --dag-id my_dag --task-id my_task --run-id scheduled__2024-01-15T10:00:00+00:00
 
     # For self-hosted Airflow (uses basic auth)
-    python fetch_api_logs.py --base-url http://localhost:8080 --username admin --password admin --dag-id my_dag --task-id my_task --run-id scheduled__2024-01-15T10:00:00+00:00
+    AIRFLOW_PASSWORD=... python fetch_api_logs.py --base-url http://localhost:8080 \
+        --username admin --dag-id my_dag --task-id my_task \
+        --run-id scheduled__2024-01-15T10:00:00+00:00
+
+    The password is never taken as an argument: anything passed on the command
+    line lands in the shell history and in the process table, where any other
+    user on the host can read it. Set AIRFLOW_PASSWORD, or let the script ask
+    for it interactively.
 
 Requirements:
     - requests
@@ -19,7 +26,9 @@ Requirements:
 
 import argparse
 import base64
+import getpass
 import json
+import os
 import sys
 from urllib.parse import urljoin
 
@@ -144,10 +153,8 @@ def main():
         "--username",
         help="Username for basic auth (non-MWAA)"
     )
-    parser.add_argument(
-        "--password",
-        help="Password for basic auth (non-MWAA)"
-    )
+    # No --password on purpose: see the module docstring. The value comes from
+    # the AIRFLOW_PASSWORD environment variable or from an interactive prompt.
 
     # Query options
     parser.add_argument(
@@ -195,11 +202,17 @@ def main():
         session = get_session_for_mwaa(base_url, web_token)
         print(f"  Base URL: {base_url}")
     else:
-        if not args.username or not args.password:
-            print("Error: --username and --password required for non-MWAA connections")
+        if not args.username:
+            print("Error: --username is required for non-MWAA connections")
             sys.exit(1)
+        password = os.environ.get("AIRFLOW_PASSWORD")
+        if not password:
+            if not sys.stdin.isatty():
+                print("Error: set AIRFLOW_PASSWORD (no TTY available to prompt for it)")
+                sys.exit(1)
+            password = getpass.getpass(f"Password for {args.username}: ")
         base_url = args.base_url.rstrip("/")
-        session = get_session_for_basic_auth(args.username, args.password)
+        session = get_session_for_basic_auth(args.username, password)
         print(f"Connecting to: {base_url}")
 
     # List DAG runs

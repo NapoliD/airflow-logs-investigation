@@ -172,7 +172,7 @@ ai_agents/
 
 ## 🎯 Skills Demonstrated
 
-This project showcases production-ready implementations of:
+This project showcases working implementations of:
 
 **AI Engineering**
 - LLM integration with multiple providers (Ollama, OpenAI, Anthropic)
@@ -244,6 +244,27 @@ Edit `ai_agents/prompts/` to customize the agent's reasoning for your specific u
 
 ---
 
+## 🧪 Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Two suites, both standard library only, both run on every push (`.github/workflows/ci.yml`):
+
+- **`test_mock_demo.py`** — runs the seven investigation steps end to end and
+  checks every JSON fixture still parses. If the demo breaks on a clean
+  checkout, this catches it.
+- **`test_repo_hygiene.py`** — the checks a security review would otherwise do
+  by hand: no credential-shaped strings committed, no `--password` argument in
+  any script, a real `LICENSE` behind the badge, and the Ollama port bound to
+  loopback rather than to every interface.
+
+The agent modules need LangChain and a model provider, so they are exercised by
+running the demos rather than in CI.
+
+---
+
 ## 📚 References
 
 - [AWS MWAA - Accessing Airflow logs](https://docs.aws.amazon.com/mwaa/latest/userguide/monitoring-airflow.html)
@@ -252,11 +273,30 @@ Edit `ai_agents/prompts/` to customize the agent's reasoning for your specific u
 
 ---
 
+## 🔒 Before you point this at real logs
+
+The AI agents send whatever log content they are given to the configured model
+provider. With `--provider openai` or `--provider anthropic` that means the text
+leaves your infrastructure and reaches a third party.
+
+- **Production logs are not safe to send as-is.** They routinely carry hostnames,
+  internal URLs, account identifiers, customer records and tokens printed by
+  accident. Anonymize before sending, or don't send.
+- **Use `--provider ollama` for anything sensitive.** The model runs locally and
+  the log content never leaves the machine.
+- Check your employer's policy before sending any internal log to a model API.
+  In regulated environments this is usually a decision that is not yours to make.
+
+The mock data in this repository is fictional, so the demos are safe to run
+against any provider.
+
+---
+
 ## 📝 Note on Mock Data
 
 All AWS account IDs, bucket names, URLs, and log contents in this project are **completely fictional**. The data is designed to be realistic enough for demonstrations and testing, but contains no real infrastructure references.
 
-The methodology and code, however, are production-ready and can be adapted for real AWS environments.
+The methodology and the code can be adapted for real AWS environments, but treat them as a starting point rather than a drop-in: they carry no retry/backoff policy, no secret management and no alerting, which is what running this against a live environment would need.
 
 ---
 

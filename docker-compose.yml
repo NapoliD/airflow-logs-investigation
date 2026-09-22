@@ -35,7 +35,9 @@ services:
   ollama:
     image: ollama/ollama:latest
     ports:
-      - "11434:11434"
+      # Bound to the loopback interface on purpose: "11434:11434" publishes the
+      # model server on every interface of the host, and Ollama has no auth.
+      - "127.0.0.1:11434:11434"
     volumes:
       - ollama_data:/root/.ollama
     # Pull llama3 on first run

@@ -54,6 +54,16 @@ Esta guía te ayuda a determinar:
 - [Airflow - Configuration Reference](https://airflow.apache.org/docs/apache-airflow/stable/configurations-ref.html)
 - [AWS MWAA - REST API](https://docs.aws.amazon.com/mwaa/latest/userguide/access-mwaa-apache-airflow-rest-api.html)
 
+## Antes de apuntarlo a logs reales
+
+Los agentes mandan el contenido del log al proveedor de modelo configurado. Con
+`--provider openai` o `--provider anthropic` ese texto sale de tu
+infraestructura y llega a un tercero. Los logs productivos suelen arrastrar
+hostnames, URLs internas, identificadores de cuenta y tokens impresos por
+error: anonimizá antes de mandarlos, o usá `--provider ollama`, que corre el
+modelo en local y no saca nada de la máquina. Los datos de este repositorio son
+ficticios, así que las demos son seguras con cualquier proveedor.
+
 ## Licencia
 
-MIT
+MIT — ver [LICENSE](LICENSE).

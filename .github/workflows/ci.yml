@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          # Only interpolation in this workflow, and it comes from the matrix
+          # above — never from event payload, which is where workflow injection
+          # comes from.
+          python-version: ${{ matrix.python-version }}
+
+      # The suite covers what runs without third-party packages: the mock demo
+      # (standard library only) and the repository hygiene checks. The agent
+      # modules import LangChain, so they are exercised by running the demos,
+      # not here — installing the LLM stack on every push buys little.
+      - name: Byte-compile every module
+        run: python -m compileall -q scripts ai_agents tests
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -v

@@ -2,16 +2,21 @@
 # Install with: pip install -r ai_agents/requirements.txt
 
 # Core LangChain
-langchain>=0.3.0
-langchain-core>=0.3.0
+langchain>=0.3,<0.4
+langchain-core>=0.3,<0.4
 
 # LLM Providers
-langchain-ollama>=0.2.0      # For local models via Ollama
-langchain-openai>=0.2.0       # For OpenAI API
-langchain-anthropic>=0.2.0    # For Anthropic/Claude API
+langchain-ollama>=0.2,<0.4      # For local models via Ollama
+langchain-openai>=0.2,<0.4      # For OpenAI API
+langchain-anthropic>=0.2,<0.4   # For Anthropic/Claude API
 
 # Utilities
-requests>=2.31.0
+requests>=2.31,<3.0
 
 # Optional: for better terminal output
-rich>=13.0.0
+rich>=13.0,<15.0
+
+# The upper bounds matter more here than elsewhere: LangChain has changed tool
+# and agent interfaces between minor releases, so an unbounded range is a demo
+# that breaks on a stranger's machine. For a pinned install:
+#   pip-compile ai_agents/requirements.txt -o ai_agents/requirements.lock
